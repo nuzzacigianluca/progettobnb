@@ -1,5 +1,5 @@
 # progettobnb
-progettobnb/conf.js
+progettobnb/project/conf.js
 
 const fs = require('fs');
 module.exports = {
