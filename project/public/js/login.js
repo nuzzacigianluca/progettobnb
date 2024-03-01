@@ -1,11 +1,10 @@
+document.getElementById("wrong").style.display = "none";
 document.getElementById("map").style.display = "none";
 
 document.getElementById("login-button").onclick=()=>{
     const user = document.getElementById("username-input").value;
     const password = document.getElementById("password-input").value;
-    checkLogin(user, password).then((data)=>{
-        console.log(data)
-    })
+    return checkLogin(user, password)
 }
 
 
@@ -24,7 +23,12 @@ const checkLogin = (user, password) => {
         })
         .then((response) => response.json())
         .then((json) => {
-            console.log(json.result)
+            if(json.result){
+                document.getElementById("loginform").style.display = "none";
+                document.getElementById("map").style.display = "block";
+            }else{
+                document.getElementById("wrong").style.display = "block";
+            }
            resolve(json)
         });
      });
