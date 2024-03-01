@@ -26,7 +26,6 @@ server.listen(80, () => {
                 console.error(err);
                 reject();     
              }    
-             //console.log('done');
              if (get){
                const data = JSON.stringify(result);
              }               
@@ -34,3 +33,23 @@ server.listen(80, () => {
        });
     });
  };
+const getCredentials= ()=>{
+   const sql = `
+   SELECT User.username, User.password
+   FROM User
+      `;
+   return executeQuery(sql, true); 
+ };
+
+
+ app.post("/login", (req, res) => {
+   const credentials = req.body;
+   getCredentials().then((data)=>{
+      const correct = data;
+      if (correct[0].username == credentials.username && correct[0].password == credentials.password){
+         res.json({result: true});
+      }else{
+         res.json({result: false});
+      }
+   });
+});
