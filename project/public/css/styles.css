@@ -1,3 +1,169 @@
+.visible {
+    display: block;
+  }
+  
+  .hidden {
+    display: none;
+  }
+  
+  .poi-content {
+    width: 60%;
+    margin: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 30px;
+    row-gap: 30px;
+    margin-top: 50px;
+    border-radius: 10px;
+  }
+  
+  @media(max-width: 900px) {
+    .poi-content {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  @media(min-width: 901px) {
+    .poi-content {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  
+  
+  .external-poi{
+    width: 100%;
+    height: 140px;
+    box-shadow: 0px 0px 4px 0px grey;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.15s all;
+  }
+  
+  
+  .external-poi:hover{
+    box-shadow: 0px 0px 8px 0px grey;
+    transform: scale(1.03)
+  }
+  
+  .image-poi {
+    height: 100px;
+    background-color: grey;
+    border-radius: inherit;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+  
+  .image-poi img{
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    border-radius: inherit;
+  }
+  
+  .bottom-poi {
+    height: 38px;
+    display: flex;
+    flex-direction: row;
+    margin-left: 30px;
+    align-items: center;
+  }
+  .buttons-poi{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  
+  .nome {
+    flex: 5;
+  }
+  
+  
+  .buttons-poi {
+    flex: 1;
+  }
+  
+  .trash-button,
+  .edit-button{
+    transition: 0.15s all;
+  }
+  
+  .trash-button:hover,
+  .edit-button:hover{
+    opacity: 0.6;
+  }
+  
+  .content-view{
+    width: 100%;
+    text-align: center;
+  }
+  
+  
 
+  .container{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
   
   
+  #password-box{
+    position: relative;
+  }
+  #show-hide-box{
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  #show-hide-box:hover{
+    opacity: 0.8;
+  }
+  
+  
+  .bg-image-vertical {
+  position: relative;
+  overflow: hidden;
+  background-repeat: no-repeat;
+  background-position: right center;
+  background-size: auto 100%;
+  }
+  
+  @media (min-width: 1025px) {
+  .h-custom-2 {
+  height: 100%;
+  }
+  }
+  
+  #form{
+    margin-left: 10%
+  }
+  
+  #password-input{	
+    appearance: none;
+                 border: none;
+                 outline: none;
+                 border-bottom: .2em solid lightblue;
+                 background: rgba(lightblue, .2);
+                 border-radius: .2em .2em 0 0;
+                 padding: .4em;
+                 color: black;
+                 width: 100%;
+                 }
+  
+  
+  #username-input{
+    appearance: none;
+     border: none;
+     outline: none;
+     border-bottom: .2em solid lightblue;
+     background: rgba(lightblue, .2);
+     border-radius: .2em .2em 0 0;
+     padding: .4em;
+     color: black;
+     width: 100%;
+  }
+  #login-button{
+    width: 100%
+  }

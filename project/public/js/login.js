@@ -32,6 +32,4 @@ const checkLogin = (user, password) => {
            resolve(json)
         });
      });
-}
-
-
+};
