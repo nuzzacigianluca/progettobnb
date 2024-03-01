@@ -49,6 +49,7 @@ const getCredentials= ()=>{
       if (correct[0].username == credentials.username && correct[0].password == credentials.password){
          res.json({result: true});
       }else{
+         res.status(401);
          res.json({result: false});
       }
    });

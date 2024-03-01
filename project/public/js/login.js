@@ -1,10 +1,9 @@
 document.getElementById("wrong").style.display = "none";
-document.getElementById("map").style.display = "none";
 
 document.getElementById("login-button").onclick=()=>{
     const user = document.getElementById("username-input").value;
     const password = document.getElementById("password-input").value;
-    return checkLogin(user, password)
+    return checkLogin(user, password);
 }
 
 
@@ -25,11 +24,29 @@ const checkLogin = (user, password) => {
         .then((json) => {
             if(json.result){
                 document.getElementById("loginform").style.display = "none";
-                document.getElementById("map").style.display = "block";
+                document.getElementById("admin").style.display = "block";
+                
             }else{
                 document.getElementById("wrong").style.display = "block";
-            }
-           resolve(json)
+            };
+           resolve(json);
         });
      });
 };
+
+document.getElementById("username-input").addEventListener("keypress", function(event) {
+    if (event.key === "Enter") {
+      console.log("clicked")
+      event.preventDefault();
+      document.getElementById("login-button").click();
+    };
+  });
+
+
+  document.getElementById("password-input").addEventListener("keypress", function(event) {
+    if (event.key === "Enter") {
+      console.log("clicked")
+      event.preventDefault();
+      document.getElementById("login-button").click();
+    };
+  });
