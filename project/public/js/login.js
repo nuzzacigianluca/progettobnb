@@ -24,8 +24,10 @@ const checkLogin = (user, password) => {
         .then((json) => {
             if(json.result){
                 document.getElementById("loginform").style.display = "none";
+                document.getElementById("back-button").style.display = "none";
                 document.getElementById("admin").style.display = "block";
-                
+                document.getElementById("username-input").value="";
+                document.getElementById("password-input").value="";
             }else{
                 document.getElementById("wrong").style.display = "block";
             };

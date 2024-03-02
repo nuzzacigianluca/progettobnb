@@ -19,7 +19,7 @@ server.listen(80, () => {
   console.log("- server running");
 });
 
- const executeQuery = (sql, get) => {
+const executeQuery = (sql, get) => {
     return new Promise((resolve, reject) => {      
           connection.query(sql, function (err, result) {
              if (err) {
@@ -32,7 +32,7 @@ server.listen(80, () => {
              resolve(result);         
        });
     });
- };
+};
 const getCredentials= ()=>{
    const sql = `
    SELECT User.username, User.password
@@ -42,8 +42,9 @@ const getCredentials= ()=>{
  };
 
 
- app.post("/login", (req, res) => {
+app.post("/login", (req, res) => {
    const credentials = req.body;
+   console.log(credentials);
    getCredentials().then((data)=>{
       const correct = data;
       if (correct[0].username == credentials.username && correct[0].password == credentials.password){
