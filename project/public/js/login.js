@@ -4,7 +4,9 @@ document.getElementById("login-button").onclick=()=>{
     const user = document.getElementById("username-input").value;
     const password = document.getElementById("password-input").value;
     return checkLogin(user, password);
-}
+    
+};
+
 
 
 const checkLogin = (user, password) => {
@@ -23,11 +25,7 @@ const checkLogin = (user, password) => {
         .then((response) => response.json())
         .then((json) => {
             if(json.result){
-                document.getElementById("loginform").style.display = "none";
-                document.getElementById("back-button").style.display = "none";
-                document.getElementById("admin").style.display = "block";
-                document.getElementById("username-input").value="";
-                document.getElementById("password-input").value="";
+              logIn()
             }else{
                 document.getElementById("wrong").style.display = "block";
             };
@@ -38,7 +36,6 @@ const checkLogin = (user, password) => {
 
 document.getElementById("username-input").addEventListener("keypress", function(event) {
     if (event.key === "Enter") {
-      console.log("clicked")
       event.preventDefault();
       document.getElementById("login-button").click();
     };
@@ -52,3 +49,15 @@ document.getElementById("username-input").addEventListener("keypress", function(
       document.getElementById("login-button").click();
     };
   });
+
+
+const logIn = () => {
+  Cookies.set('logged','true');
+  document.getElementById("loginform").style.display = "none";
+  document.getElementById("admin").style.display = "block";
+  document.getElementById("log-out").style.display = "block";
+  document.getElementById("username-input").value="";
+  document.getElementById("password-input").value="";
+  document.getElementById("add_bnb").style.display="block";
+    document.getElementById("view_bnb").style.display="block";
+};

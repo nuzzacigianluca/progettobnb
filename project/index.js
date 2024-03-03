@@ -44,7 +44,6 @@ const getCredentials= ()=>{
 
 app.post("/login", (req, res) => {
    const credentials = req.body;
-   console.log(credentials);
    getCredentials().then((data)=>{
       const correct = data;
       if (correct[0].username == credentials.username && correct[0].password == credentials.password){
