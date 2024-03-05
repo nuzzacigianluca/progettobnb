@@ -132,5 +132,3 @@ dist
 
 conf.js
 ca.pem
-package.json
-package-lock.json
