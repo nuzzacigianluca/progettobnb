@@ -69,11 +69,3 @@ document.getElementById("manage-button-a").onclick=()=>{
 };
 
 
-/*
-document.getElementById("home_page").onclick=()=>{
-    document.getElementById("map").style.display = "block";
-    document.getElementById("loginform").style.display = "none";
-    document.getElementById("log-out").style.display = "none";
-    document.getElementById("add_form").style.display = "none";
-    document.getElementById("bnb_div").style.display = "none";
-};*/
