@@ -52,12 +52,13 @@ document.getElementById("username-input").addEventListener("keypress", function(
 
 
 const logIn = () => {
-  Cookies.set('logged','true');
+  Cookies.set('username',document.getElementById("username-input").value);
+  Cookies.set('password',document.getElementById("password-input").value);
   document.getElementById("loginform").style.display = "none";
   document.getElementById("admin").style.display = "block";
   document.getElementById("log-out").style.display = "block";
   document.getElementById("username-input").value="";
   document.getElementById("password-input").value="";
   document.getElementById("add_bnb").style.display="block";
-    document.getElementById("view_bnb").style.display="block";
+  document.getElementById("view_bnb").style.display="block";
 };
