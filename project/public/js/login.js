@@ -44,7 +44,6 @@ document.getElementById("username-input").addEventListener("keypress", function(
 
   document.getElementById("password-input").addEventListener("keypress", function(event) {
     if (event.key === "Enter") {
-      console.log("clicked")
       event.preventDefault();
       document.getElementById("login-button").click();
     };

@@ -10,7 +10,10 @@ document.getElementById("view_bnb").onclick=()=>{
 };
 document.getElementById("back-button").onclick=()=>{
     backToHome();
-}
+};
+document.getElementById("confirm_add").onclick=()=>{
+    getCoordinates(document.getElementById("address").value);
+};
 const logOut = () => {
     Cookies.set('username','');
     Cookies.set('password','');
@@ -25,7 +28,7 @@ const logOut = () => {
     document.getElementById("log-out").style.display = "none";
     document.getElementById("add_bnb").style.display="none";
     document.getElementById("view_bnb").style.display="none"; 
-}
+};
 const backToHome = () => {
     document.getElementById("manage-button-a").style.display = "block";
     document.getElementById("title-name-detail").innerText = 'Home page - BnB';
@@ -41,7 +44,7 @@ const backToHome = () => {
 const showAddBnBForm = () => {
     document.getElementById("add_form").style.display = "block";
     document.getElementById("bnb_div").style.display = "none";
-}
+};
 const showBnb = () => {
     document.getElementById("bnb_div").style.display = "block";
     document.getElementById("add_form").style.display = "none";
@@ -49,7 +52,7 @@ const showBnb = () => {
 const loggedUser = () => {
     document.querySelectorAll(".logged").forEach((element)=>{element.style.display = "block"});
     document.getElementById("username-input").value=Cookies.get('username');
-    document.getElementById("username-input").value=Cookies.get('password');
+    document.getElementById("password-input").value=Cookies.get('password');
     
     document.getElementById("username-input").style = "background-color:lightgreen;";
     document.getElementById("password-input").style = "background-color:lightgreen;";
@@ -57,11 +60,11 @@ const loggedUser = () => {
     document.getElementById("map").style.display = "none";
     document.getElementById("loginform").style.display = "block";
     document.getElementById("add_form").style.display = "none";
-    document.getElementById("admin").style.display = "block";
-    document.getElementById("log-out").style.display = "block"; 
+    document.getElementById("admin").style.display = "none";
+    document.getElementById("log-out").style.display = "none"; 
     document.getElementById("bnb_div").style.display = "none";  
-    document.getElementById("add_bnb").style.display="block";
-    document.getElementById("view_bnb").style.display="block";
+    document.getElementById("add_bnb").style.display="none";
+    document.getElementById("view_bnb").style.display="none";
 };
 const notLoggedUser = () => {
     document.getElementById("map").style.display = "none";
@@ -76,8 +79,29 @@ document.getElementById("manage-button-a").onclick=()=>{
     const password = Cookies.get('password');
     
     if(username && password){
-        loggedUser()
+        loggedUser();
     }else{
-        notLoggedUser()
+        notLoggedUser();
     };
 };
+
+
+
+const getCoordinates=(address) =>{
+
+    const geocodingUrl = 'https://nominatim.openstreetmap.org/search?format=json&q=' + encodeURIComponent(address);
+    fetch(geocodingUrl)
+      .then(response => response.json())
+      .then(data => {
+        if (data.length > 0) {
+          const latitude = data[0].lat;
+          const longitude = data[0].lon;
+          console.log('Latitude: ' + latitude);
+          console.log('Longitude: ' + longitude);
+        } else {
+          console.error('Geocoding failed. No results found.');
+        };
+      })
+      .catch(error => {
+        console.error('Error fetching geocoding data:', error);
+      });};

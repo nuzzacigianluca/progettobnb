@@ -8,16 +8,16 @@ let map; // Definisci la variabile map nell'ambito globale
 function setLayers(map) {
   const layers = [new ol.layer.Tile({ source: new ol.source.OSM() })];
   map.addLayer(new window.ol.layer.Group({ layers }));
-}
+};
 
 function setCenter(map, lonlat) {
   const center = window.ol.proj.fromLonLat(lonlat);
   map.getView().setCenter(center);
-}
+};
 
 function setZoom(map, zoom) {
   map.getView().setZoom(zoom);
-}
+};
 
 function updateMapExtent() {
   const extent = ol.extent.createEmpty();
@@ -28,7 +28,7 @@ function updateMapExtent() {
   map.getView().fit(extent, {
     padding: [45, 45, 45, 45],
   });
-}
+};
 
 const addMarker = (map, point) => {
   const feature = new ol.Feature({
@@ -60,14 +60,14 @@ const addMarker = (map, point) => {
         showConfirmButton: true,
         showCancelButton: false,
       });
-    }
+    };
   });
 
   map.addLayer(layer);
   markers.push({ feature, layer });
   if(markers.length>1){
     updateMapExtent(); // Aggiorna l'estensione della mappa per includere il nuovo marcatore
-  }
+  };
   
 };
 
@@ -104,9 +104,9 @@ function initOverlay(map, points) {
     } else {
       overlay.setPosition(undefined);
       closer.blur();
-    }
+    };
   });
-}
+};
 
 // create map
 map = new ol.Map({ target: document.querySelector('.map') });
