@@ -101,3 +101,5 @@ setLayers(map);
 setCenter(map, [9.2415, 45.4965]);
 setZoom(map, 10);
 initOverlay(map);
+
+// remove_marker(0);

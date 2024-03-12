@@ -12,7 +12,12 @@ document.getElementById("back-button").onclick=()=>{
     backToHome();
 };
 document.getElementById("confirm_add").onclick=()=>{
-    getCoordinates(document.getElementById("address").value);
+    const city = document.getElementById("city").value
+    const address = document.getElementById("address").value
+    const n = document.getElementById("n").value
+
+    getCoordinates(city+","+address+" "+n);
+    document.getElementById("add_form").reset;
 
 };
 const logOut = () => {
@@ -96,6 +101,7 @@ const getCoordinates=(address) =>{
         if (data.length > 0) {
           const latitude = data[0].lat;
           const longitude = data[0].lon;
+          addMarker({lonlat:[longitude,latitude]});
           console.log('Latitude: ' + latitude);
           console.log('Longitude: ' + longitude);
         } else {
