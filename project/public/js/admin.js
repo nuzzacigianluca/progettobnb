@@ -13,6 +13,7 @@ document.getElementById("back-button").onclick=()=>{
 };
 document.getElementById("confirm_add").onclick=()=>{
     getCoordinates(document.getElementById("address").value);
+
 };
 const logOut = () => {
     Cookies.set('username','');

@@ -1,24 +1,24 @@
 const container = document.getElementById('popup');
-const content = document.getElementById('popup-content');
 const closer = document.getElementById('popup-closer');
 let overlay;
 let markers = [];
-let map; // Definisci la variabile map nell'ambito globale
+let map; 
 
 function setLayers(map) {
   const layers = [new ol.layer.Tile({ source: new ol.source.OSM() })];
   map.addLayer(new window.ol.layer.Group({ layers }));
-};
+}
 
 function setCenter(map, lonlat) {
   const center = window.ol.proj.fromLonLat(lonlat);
   map.getView().setCenter(center);
-};
+}
 
 function setZoom(map, zoom) {
   map.getView().setZoom(zoom);
-};
+}
 
+// all'aggiunta del poi viene ridimensionata la mappa affinchè tutti i marcatori siano visibili
 function updateMapExtent() {
   const extent = ol.extent.createEmpty();
   markers.forEach((marker) => {
@@ -26,17 +26,15 @@ function updateMapExtent() {
   });
 
   map.getView().fit(extent, {
-    padding: [45, 45, 45, 45],
+    padding: [5, 5, 5, 5],
   });
-};
+}
 
-const addMarker = (map, point) => {
+// funzione per aggiungere un marcatore
+const addMarker = (point) => {
   const feature = new ol.Feature({
     geometry: new ol.geom.Point(ol.proj.fromLonLat(point.lonlat)),
   });
-  feature.name = point.name;
-  feature.description = point.description;
-
   const layer = new ol.layer.Vector({
     source: new ol.source.Vector({
       features: [feature],
@@ -45,32 +43,19 @@ const addMarker = (map, point) => {
       image: new ol.style.Icon({
         anchor: [0.5, 1],
         crossOrigin: 'anonymous',
-        src: 'https://docs.maptiler.com/openlayers/default-marker/marker-icon.png',
+        src: 'https://i.postimg.cc/KcNTTRTt/marker-map.png',
       }),
     }),
   });
-
-  map.on('click', function (e) {
-    const feature = map.getFeaturesAtPixel(e.pixel);
-    if (feature.length != 0) {
-      Swal.fire({
-        title: 'NOME:\n' + feature[0].name + '\nDESCRIZIONE:\n' + feature[0].description,
-        position: 'top',
-        background: 'white',
-        showConfirmButton: true,
-        showCancelButton: false,
-      });
-    };
-  });
-
   map.addLayer(layer);
   markers.push({ feature, layer });
   if(markers.length>1){
-    updateMapExtent(); // Aggiorna l'estensione della mappa per includere il nuovo marcatore
-  };
-  
+    updateMapExtent(); // Aggiorna l'estensione della mappa per visualizzare tutti i marcatori
+  }
+
 };
 
+// funzione per rimuovere un marcatore
 const remove_marker = (i) => {
   map.removeLayer(markers[i].layer);
   markers.splice(i, 1);
@@ -104,13 +89,15 @@ function initOverlay(map, points) {
     } else {
       overlay.setPosition(undefined);
       closer.blur();
-    };
+    }
   });
-};
+}
 
 // create map
 map = new ol.Map({ target: document.querySelector('.map') });
+map.height = screen.height / 1.6;
+map.getViewport().style.height = map.height + 'px';  
 setLayers(map);
 setCenter(map, [9.2415, 45.4965]);
-setZoom(map, 12);
+setZoom(map, 10);
 initOverlay(map);
