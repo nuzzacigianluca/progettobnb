@@ -89,7 +89,6 @@ document.getElementById("manage-button-a").onclick=()=>{
 
 
 const getCoordinates=(address) =>{
-
     const geocodingUrl = 'https://nominatim.openstreetmap.org/search?format=json&q=' + encodeURIComponent(address);
     fetch(geocodingUrl)
       .then(response => response.json())
@@ -105,4 +104,5 @@ const getCoordinates=(address) =>{
       })
       .catch(error => {
         console.error('Error fetching geocoding data:', error);
-      });};
+      });
+    };
