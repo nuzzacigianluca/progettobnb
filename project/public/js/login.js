@@ -53,6 +53,7 @@ document.getElementById("username-input").addEventListener("keypress", function(
 const logIn = () => {
   Cookies.set('username',document.getElementById("username-input").value);
   Cookies.set('password',document.getElementById("password-input").value);
+  getBnbs()
   document.getElementById("loginform").style.display = "none";
   document.getElementById("admin").style.display = "block";
   document.getElementById("log-out").style.display = "block";
@@ -60,4 +61,36 @@ const logIn = () => {
   document.getElementById("password-input").value="";
   document.getElementById("add_bnb").style.display="block";
   document.getElementById("view_bnb").style.display="block";
+};
+
+
+const templateTable = `
+<tr>
+    <th scope="row">%NAME</th>
+    <td>%ADDRESS</td>
+    <td>%DESCRIPTION</td>
+    <td><button type="button" class="btn btn-danger" id="delete_%ID">Elimina</button></td>
+</tr>
+`;
+
+const renderTable = (name, address, description, id) => {
+  let html = ""
+  html = templateTable.replace("%NAME",name)
+  .replace("%ADDRESS", address)
+  .replace("%DESCRIPTION", description)
+  .replace("%ID", id);
+  document.getElementById("tbody").innerHTML += html;
+};
+
+
+const getBnbs = () => {
+  return new Promise((resolve, reject) => {
+      fetch("/bnbs")
+      .then((response) => response.json())
+      .then((json) => {
+          console.log(json)
+          //renderTable()
+         resolve(json);
+      });
+   });
 };

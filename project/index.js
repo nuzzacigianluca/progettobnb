@@ -54,3 +54,27 @@ app.post("/login", (req, res) => {
       }
    });
 });
+const getBnBs= ()=>{
+   const sql = `
+   SELECT BnB.id, BnB.name, BnB.address, BnB.description
+   FROM BnB
+      `;
+   return executeQuery(sql, true); 
+ };
+app.get("/bnbs", (req, res) => {
+   getBnBs().then((data)=>{
+      res.json({bnbs:data});
+   });
+   
+});
+
+app.post("/savebnb", (req, res) => {
+   const data = req.body;
+      const correct = data;
+      if (correct[0].username == credentials.username && correct[0].password == credentials.password){
+         res.json({result: true});
+      }else{
+         res.status(401);
+         res.json({result: false});
+      }
+});

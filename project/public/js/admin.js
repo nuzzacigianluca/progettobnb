@@ -12,13 +12,32 @@ document.getElementById("back-button").onclick=()=>{
     backToHome();
 };
 document.getElementById("confirm_add").onclick=()=>{
-    const city = document.getElementById("city").value
-    const address = document.getElementById("address").value
-    const n = document.getElementById("n").value
-
-    getCoordinates(city+","+address+" "+n);
-    document.getElementById("add_form").reset;
-
+    if(document.getElementById("input_name").value 
+    && document.getElementById("type").value!="select" 
+    && document.getElementById("address").value 
+    && document.getElementById("civic").value 
+    && document.getElementById("city").value
+    && document.getElementById("description").value){
+        const address = document.getElementById("type").value 
+        +" "+ document.getElementById("address").value
+        +" "+ document.getElementById("civic").value
+        +" "+ document.getElementById("city").value;
+        
+        if(getCoordinates(address)){
+            const bnb = {
+                "name": document.getElementById("input_name").value,
+                "address": address,
+                "description": document.getElementById("description").value,
+                "coordinates": getCoordinates(address)
+            };
+            document.getElementById("ok").style.display = "block";
+            document.getElementById("wrongi").style.display = "none";
+            document.getElementById("add_form").reset;
+        }; 
+    }else{
+        document.getElementById("wrongi").style.display = "block";
+        document.getElementById("ok").style.display = "none";
+    };
 };
 const logOut = () => {
     Cookies.set('username','');
@@ -101,14 +120,36 @@ const getCoordinates=(address) =>{
         if (data.length > 0) {
           const latitude = data[0].lat;
           const longitude = data[0].lon;
-          addMarker({lonlat:[longitude,latitude]});
-          console.log('Latitude: ' + latitude);
-          console.log('Longitude: ' + longitude);
+          //addMarker({lonlat:[longitude,latitude]});
+          return ({"lat": latitude, "long": longitude});
         } else {
-          console.error('Geocoding failed. No results found.');
+            return false
         };
       })
       .catch(error => {
         console.error('Error fetching geocoding data:', error);
       });
     };
+
+
+const saveBnB = (bnb) => {
+    const data=bnb;
+    return new Promise((resolve, reject) => {
+        fetch("/login", {
+           method: 'POST',
+           headers: {
+              "Content-Type": "application/json"
+           },
+           body: JSON.stringify(data)
+        })
+        .then((response) => response.json())
+        .then((json) => {
+            if(json.result){
+              console.log("ciao")
+            }else{
+                document.getElementById("wrong").style.display = "block";
+            };
+           resolve(json);
+        });
+     });
+};
