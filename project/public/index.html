@@ -84,6 +84,7 @@
           </section>
           
           <div id="admin" class="container">
+            
               <table id="bnbs" class="table" style="margin-top:2%;">
                 <thead>
                   <tr>
@@ -94,23 +95,7 @@
                   </tr>
                 </thead>
                 <tbody class="table-group-divider" id="tbody">
-                  <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">3</th>
-                    <td colspan="2">Larry the Bird</td>
-                    <td>@twitter</td>
-                  </tr>
+                  
                 </tbody>
               </table>
             
@@ -154,6 +139,23 @@
                <a href="#" id="popup-closer" class="ol-popup-closer"></a>
                <div id="popup-content"></div>
            </div>
+          </div>
+          <div class="modal fade" class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Conferma</h5>
+                  <button type="button" id="no1" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  Confermi di voler eliminare il BnB?
+                </div>
+                <div class="modal-footer">
+                  <button type="button" id="no" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                  <button type="button" id="conf" class="btn btn-danger">Conferma</button>
+                </div>
+              </div>
+            </div>
           </div>
           <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
            <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>

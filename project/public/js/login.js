@@ -51,9 +51,9 @@ document.getElementById("username-input").addEventListener("keypress", function(
 
 
 const logIn = () => {
+  getBnbs();
   Cookies.set('username',document.getElementById("username-input").value);
   Cookies.set('password',document.getElementById("password-input").value);
-  getBnbs()
   document.getElementById("loginform").style.display = "none";
   document.getElementById("admin").style.display = "block";
   document.getElementById("log-out").style.display = "block";
@@ -69,28 +69,68 @@ const templateTable = `
     <th scope="row">%NAME</th>
     <td>%ADDRESS</td>
     <td>%DESCRIPTION</td>
-    <td><button type="button" class="btn btn-danger" id="delete_%ID">Elimina</button></td>
+    <td><button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" class="del btn btn-danger" id="delete_%ID">Rimuovi</button></td>
 </tr>
 `;
 
-const renderTable = (name, address, description, id) => {
-  let html = ""
-  html = templateTable.replace("%NAME",name)
-  .replace("%ADDRESS", address)
-  .replace("%DESCRIPTION", description)
-  .replace("%ID", id);
+const renderTable = (json) => {
+  console.log("rendering");
+  let html = "";
+  let row="";
+  document.getElementById("tbody").innerHTML ="";
+  json.forEach((element)=>{
+    console.log(element);
+    row = templateTable.replace("%NAME",element.name)
+    .replace("%ADDRESS", element.address)
+    .replace("%DESCRIPTION", element.description)
+    .replace("%ID", element.id);
+   html += row 
+  })
   document.getElementById("tbody").innerHTML += html;
+  
+  document.querySelectorAll(".del").forEach((button)=>{
+    button.onclick=()=>{
+      const id = button.id.split("_")[1];
+      $('#exampleModal').modal('show');
+      document.getElementById("no").onclick=()=>{
+        $('#exampleModal').modal('toggle');
+    };
+    document.getElementById("no1").onclick=()=>{
+      $('#exampleModal').modal('toggle');
+  };
+      document.getElementById("conf").onclick=()=>{
+        $('#exampleModal').modal('toggle');
+        deleteElement(id).then(()=>{
+          getBnbs();
+        });
+      };
+    };
+  });
 };
 
-
+let bnbs = [];
 const getBnbs = () => {
   return new Promise((resolve, reject) => {
       fetch("/bnbs")
       .then((response) => response.json())
       .then((json) => {
-          console.log(json)
-          //renderTable()
+        renderTable(json.bnbs)
          resolve(json);
       });
    });
+};
+
+const deleteElement = (id) => {
+  return new Promise((resolve, reject) => {
+     fetch("/delete/"+id, {
+        method: 'DELETE',
+        headers: {
+           "Content-Type": "application/json"
+        },
+     })
+     .then((response) => response.json())
+     .then((json) => {
+        resolve(json);
+     });
+  });
 };

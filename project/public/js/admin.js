@@ -22,18 +22,7 @@ document.getElementById("confirm_add").onclick=()=>{
         +" "+ document.getElementById("address").value
         +" "+ document.getElementById("civic").value
         +" "+ document.getElementById("city").value;
-        
-        if(getCoordinates(address)){
-            const bnb = {
-                "name": document.getElementById("input_name").value,
-                "address": address,
-                "description": document.getElementById("description").value,
-                "coordinates": getCoordinates(address)
-            };
-            document.getElementById("ok").style.display = "block";
-            document.getElementById("wrongi").style.display = "none";
-            document.getElementById("add_form").reset;
-        }; 
+        getCoordinates(address)
     }else{
         document.getElementById("wrongi").style.display = "block";
         document.getElementById("ok").style.display = "none";
@@ -43,7 +32,6 @@ const logOut = () => {
     Cookies.set('username','');
     Cookies.set('password','');
     document.querySelectorAll(".logged").forEach((element)=>{element.style.display = "none"});
-    
     document.getElementById("username-input").style = "border-bottom: .2em solid lightblue";
     document.getElementById("password-input").style = "border-bottom: .2em solid lightblue";
     document.getElementById("map").style.display = "none";
@@ -69,19 +57,19 @@ const backToHome = () => {
 const showAddBnBForm = () => {
     document.getElementById("add_form").style.display = "block";
     document.getElementById("bnb_div").style.display = "none";
+    document.getElementById("bnbs").style.display = "none";
 };
 const showBnb = () => {
-    document.getElementById("bnb_div").style.display = "block";
+    getBnbs();
+    document.getElementById("bnbs").style.display = "block";
     document.getElementById("add_form").style.display = "none";
 };
 const loggedUser = () => {
     document.querySelectorAll(".logged").forEach((element)=>{element.style.display = "block"});
     document.getElementById("username-input").value=Cookies.get('username');
     document.getElementById("password-input").value=Cookies.get('password');
-    
     document.getElementById("username-input").style = "background-color:lightgreen;";
     document.getElementById("password-input").style = "background-color:lightgreen;";
-
     document.getElementById("map").style.display = "none";
     document.getElementById("loginform").style.display = "block";
     document.getElementById("add_form").style.display = "none";
@@ -102,7 +90,6 @@ document.getElementById("manage-button-a").onclick=()=>{
     document.getElementById("manage-button-a").style.display = "none";  
     const username = Cookies.get('username');
     const password = Cookies.get('password');
-    
     if(username && password){
         loggedUser();
     }else{
@@ -111,8 +98,9 @@ document.getElementById("manage-button-a").onclick=()=>{
 };
 
 
-
+let coordinates = {};
 const getCoordinates=(address) =>{
+    coordinates = {};
     const geocodingUrl = 'https://nominatim.openstreetmap.org/search?format=json&q=' + encodeURIComponent(address);
     fetch(geocodingUrl)
       .then(response => response.json())
@@ -120,10 +108,15 @@ const getCoordinates=(address) =>{
         if (data.length > 0) {
           const latitude = data[0].lat;
           const longitude = data[0].lon;
-          //addMarker({lonlat:[longitude,latitude]});
-          return ({"lat": latitude, "long": longitude});
-        } else {
-            return false
+          coordinates = {"lat": latitude, "long": longitude};
+          const bnb = {
+            "name": document.getElementById("input_name").value,
+            "address": address,
+            "description": document.getElementById("description").value,
+            "coordinates": coordinates
+        };
+        saveBnB(bnb);
+        
         };
       })
       .catch(error => {
@@ -135,7 +128,7 @@ const getCoordinates=(address) =>{
 const saveBnB = (bnb) => {
     const data=bnb;
     return new Promise((resolve, reject) => {
-        fetch("/login", {
+        fetch("/savebnb", {
            method: 'POST',
            headers: {
               "Content-Type": "application/json"
@@ -145,9 +138,12 @@ const saveBnB = (bnb) => {
         .then((response) => response.json())
         .then((json) => {
             if(json.result){
-              console.log("ciao")
+                document.getElementById("ok").style.display = "block";
+                document.getElementById("wrongi").style.display = "none";
+                document.getElementById("add_form").reset;
             }else{
-                document.getElementById("wrong").style.display = "block";
+                document.getElementById("ok").style.display = "none";
+                document.getElementById("wrongi").style.display = "block";
             };
            resolve(json);
         });

@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const fs = require('fs');
 const mysql = require('mysql2');
 const conf = require('./conf.js');
+const { exec } = require("child_process");
 const connection = mysql.createConnection(conf);
 
 const app = express();
@@ -70,11 +71,54 @@ app.get("/bnbs", (req, res) => {
 
 app.post("/savebnb", (req, res) => {
    const data = req.body;
-      const correct = data;
-      if (correct[0].username == credentials.username && correct[0].password == credentials.password){
-         res.json({result: true});
-      }else{
-         res.status(401);
-         res.json({result: false});
-      }
+   saveCoord(data.coordinates.lat, data.coordinates.long)
+   saveBnB(data.name, data.address, data.description,data.coordinates.lat, data.coordinates.long);
+   res.json({Response: "OK"})
 });
+
+
+const saveCoord = (lat, lon) => {
+   let template = `
+   INSERT INTO Coordinates (latitude, longitude)
+   VALUES ($LAT, $LONG) 
+      `;
+   const sql = template.replace("$LAT", lat)
+   .replace("$LONG", lon);
+   return executeQuery(sql);
+};
+
+
+const saveBnB = (name, address, description, latitude, longitude) => {
+   let template = `
+   INSERT INTO BnB (name, address, description, coordinates)
+   VALUES ('$NAME', '$ADDRESS', '$DESCRIPTION', (
+      SELECT Coordinates.id
+       FROM Coordinates  
+       WHERE Coordinates.latitude = '$LAT' 
+       AND Coordinates.longitude = '$LON' 
+       LIMIT 1
+       )
+       ) 
+      `;
+   const sql = template.replace("$NAME", name)
+   .replace("$ADDRESS", address)
+   .replace("$DESCRIPTION", description)
+   .replace("$LAT", latitude)
+   .replace("$LON", longitude);
+   return executeQuery(sql);
+};
+
+
+app.delete("/delete/:id", (req, res) => {
+   deleteElement(req.params.id);
+    res.json({Result: "Ok"});   
+ })
+
+const deleteElement=(id)=>{
+   let template = `
+   DELETE FROM BnB WHERE BnB.id=$ID;
+      `;
+   const sql = template.replace("$ID", id)
+   
+   return executeQuery(sql);
+};
