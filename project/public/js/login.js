@@ -79,11 +79,10 @@ const renderTable = (json) => {
   let row="";
   document.getElementById("tbody").innerHTML ="";
   json.forEach((element)=>{
-    console.log(element);
     row = templateTable.replace("%NAME",element.name)
     .replace("%ADDRESS", element.address)
     .replace("%DESCRIPTION", element.description)
-    .replace("%ID", element.id);
+    .replace("%ID", element.id+","+element.coordinates);
    html += row 
   })
   document.getElementById("tbody").innerHTML += html;
@@ -100,7 +99,8 @@ const renderTable = (json) => {
   };
       document.getElementById("conf").onclick=()=>{
         $('#exampleModal').modal('toggle');
-        deleteElement(id).then(()=>{
+        deleteElement(parseInt(id.split(",")[0])).then(()=>{
+          deleteCoords(parseInt(id.split(",")[1]))
           getBnbs();
         });
       };
@@ -134,3 +134,18 @@ const deleteElement = (id) => {
      });
   });
 };
+
+const deleteCoords = (id) => {
+  return new Promise((resolve, reject) => {
+     fetch("/deleteCoords/"+id, {
+        method: 'DELETE',
+        headers: {
+           "Content-Type": "application/json"
+        },
+     })
+     .then((response) => response.json())
+     .then((json) => {
+        resolve(json);
+     });
+  });
+} ;

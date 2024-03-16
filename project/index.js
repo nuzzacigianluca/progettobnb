@@ -57,7 +57,7 @@ app.post("/login", (req, res) => {
 });
 const getBnBs= ()=>{
    const sql = `
-   SELECT BnB.id, BnB.name, BnB.address, BnB.description
+   SELECT *
    FROM BnB
       `;
    return executeQuery(sql, true); 
@@ -142,6 +142,3 @@ const deleteElement=(id,table)=>{
    return executeQuery(sql);
 };
 
-getBnBs().then((data)=>{
-   console.log(data);
-});

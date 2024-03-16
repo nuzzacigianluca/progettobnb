@@ -32,7 +32,6 @@ function updateMapExtent() {
 
 // funzione per aggiungere un marcatore
 const addMarker = (bnb) => {
-  console.log(bnb,"bnb")
   const feature = new ol.Feature({
     geometry: new ol.geom.Point(ol.proj.fromLonLat([bnb.coordinates.long,bnb.coordinates.lat])),
   });
@@ -116,3 +115,39 @@ setZoom(map, 10);
 initOverlay(map);
 // addMarker([9.2415, 45.4965])
 // remove_marker(0);
+
+
+const renderMarkers=(coordinates,bnbs)=>{
+  for(let i=0; i<bnbs.length; i++){
+    const coordsId = coordinates[i].id
+    const bnb = bnbs.find((element)=>element.coordinates===coordsId);
+    bnb.coordinates = {lat: coordinates[i].latitude, long: coordinates[i].longitude}
+    addMarker(bnb);
+  }
+}
+
+
+const getBnBs = (coordinates) => {
+  return new Promise((resolve, reject) => {
+      fetch("/bnbs")
+      .then((response) => response.json())
+      .then((json) => {
+        renderMarkers(coordinates.coords,json.bnbs);
+        resolve(json);
+      });
+   });
+};
+
+// gets coordinates
+const getCoords = () => {
+  return new Promise((resolve, reject) => {
+      fetch("/coords")
+      .then((response) => response.json())
+      .then((json) => {
+          getBnBs(json);
+          resolve(json);
+      });
+  });
+};
+
+getCoords()
