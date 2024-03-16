@@ -60,13 +60,15 @@ const backToHome = () => {
     document.getElementById("view_bnb").style.display="none";
 }
 const showAddBnBForm = () => {
+    document.getElementById("add_form").classList.add("falling-animation");
     document.getElementById("add_form").style.display = "block";
     document.getElementById("bnbs").style.display = "none";
 };
 const showBnb = () => {
     getBnbs();
-    document.getElementById("bnbs").style.display = "block";
+    document.getElementById("bnbs").classList.add("falling-animation");
     document.getElementById("add_form").style.display = "none";
+    document.getElementById("bnbs").style.display = "block";
 };
 const loggedUser = () => {
     document.querySelectorAll(".logged").forEach((element)=>{element.style.display = "block"});
@@ -146,7 +148,7 @@ const saveBnB = (bnb) => {
                 setTimeout(() => {
                     document.getElementById("ok").style.display = "none";
                     document.getElementById("add_form").reset();
-                }, 6000);
+                }, 3000);
             }else{
                 document.getElementById("loading").style.display="none";
                 document.getElementById("ok").style.display = "none";
@@ -156,3 +158,13 @@ const saveBnB = (bnb) => {
         });
      });
 };
+
+
+
+$('#view_bnb').click(function() {
+    $('#add_form').removeClass('falling-animation'); // Rimuovi l'animazione di sparizione
+    $('#add_form').addClass('rising-animation'); // Aggiungi l'animazione di caduta
+  
+  });
+  
+  

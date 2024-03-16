@@ -168,3 +168,19 @@
   #login-button{
     width: 100%
   }
+
+
+  @keyframes fallingAnimation {
+    0% {
+      transform: translateY(-400px); 
+      opacity: 0; 
+    }
+    100% {
+      transform: translateY(0); 
+      opacity: 1;
+    }
+  }
+  
+.falling-animation {
+  animation: fallingAnimation 0.5s ease forwards;
+}

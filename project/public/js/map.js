@@ -26,7 +26,7 @@ function updateMapExtent() {
   });
 
   map.getView().fit(extent, {
-    padding: [5, 5, 5, 5],
+    padding: [45, 45, 45, 45],
   });
 }
 
@@ -121,6 +121,7 @@ const renderMarkers=(coordinates,bnbs)=>{
   for(let i=0; i<bnbs.length; i++){
     const coordsId = coordinates[i].id
     const bnb = bnbs.find((element)=>element.coordinates===coordsId);
+    console.log(bnb,"bnb");
     bnb.coordinates = {lat: coordinates[i].latitude, long: coordinates[i].longitude}
     addMarker(bnb);
   }
@@ -144,6 +145,11 @@ const getCoords = () => {
       fetch("/coords")
       .then((response) => response.json())
       .then((json) => {
+          // const data = json.coords
+          // data.forEach(element => {
+          //     console.log(element)
+          //     deleteCoordss(element.id);
+          //   });
           getBnBs(json);
           resolve(json);
       });
@@ -151,3 +157,19 @@ const getCoords = () => {
 };
 
 getCoords()
+
+// const deleteCoordss = (id) => {
+//       return new Promise((resolve, reject) => {
+//          fetch("/deleteCoords/"+id, {
+//             method: 'DELETE',
+//             headers: {
+//                "Content-Type": "application/json"
+//             },
+//          })
+//          .then((response) => response.json())
+//          .then((json) => {
+//             resolve(json);
+//          });
+//       });
+//   } ;
+  
