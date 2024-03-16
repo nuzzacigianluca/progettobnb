@@ -31,10 +31,16 @@ function updateMapExtent() {
 }
 
 // funzione per aggiungere un marcatore
-const addMarker = (point) => {
+const addMarker = (bnb) => {
+  console.log(bnb,"bnb")
   const feature = new ol.Feature({
-    geometry: new ol.geom.Point(ol.proj.fromLonLat(point.lonlat)),
+    geometry: new ol.geom.Point(ol.proj.fromLonLat([bnb.coordinates.long,bnb.coordinates.lat])),
   });
+  feature.name=bnb.name;
+  feature.address=bnb.address;
+  feature.description=bnb.description;
+  feature.id=bnb.id;
+
   const layer = new ol.layer.Vector({
     source: new ol.source.Vector({
       features: [feature],
@@ -57,7 +63,7 @@ const addMarker = (point) => {
 
 // funzione per rimuovere un marcatore
 const remove_marker = (i) => {
-  map.removeLayer(markers[i].layer);
+  map.removeLayer(markers[i]);
   markers.splice(i, 1);
 
   if(markers.length>1){
@@ -84,6 +90,13 @@ function initOverlay(map, points) {
     if (map.hasFeatureAtPixel(event.pixel) === true) {
       map.forEachFeatureAtPixel(event.pixel, (feature, layer) => {
         const coordinate = event.coordinate;
+        Swal.fire({
+          title: 'NOME:\n' + feature.name + '\nDESCRIZIONE:\n' + feature.description+ '\nINDIRIZZO\n' +feature.address,
+          position: 'top',
+          background: 'white',
+          showConfirmButton: true,
+          showCancelButton: false,
+        });
         overlay.setPosition(coordinate);
       });
     } else {
@@ -101,5 +114,5 @@ setLayers(map);
 setCenter(map, [9.2415, 45.4965]);
 setZoom(map, 10);
 initOverlay(map);
-
-//remove_marker(0);
+// addMarker([9.2415, 45.4965])
+// remove_marker(0);

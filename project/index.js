@@ -69,6 +69,20 @@ app.get("/bnbs", (req, res) => {
    
 });
 
+const getCoords=()=>{
+   const sql = `
+   SELECT *
+   FROM Coordinates
+      `;
+   return executeQuery(sql,true); 
+}
+
+app.get("/coords", (req, res) => {
+   getCoords().then((data)=>{
+      res.json({coords:data});
+   });
+});
+
 app.post("/savebnb", (req, res) => {
    const data = req.body;
    saveCoord(data.coordinates.lat, data.coordinates.long)
@@ -110,15 +124,24 @@ const saveBnB = (name, address, description, latitude, longitude) => {
 
 
 app.delete("/delete/:id", (req, res) => {
-   deleteElement(req.params.id);
+   deleteElement(req.params.id,"BnB");
     res.json({Result: "Ok"});   
  })
 
-const deleteElement=(id)=>{
+app.delete("/deleteCoords/:id", (req, res) => {
+   deleteElement(req.params.id,"Coordinates");
+    res.json({Result: "Ok"});   
+ })
+
+const deleteElement=(id,table)=>{
    let template = `
-   DELETE FROM BnB WHERE BnB.id=$ID;
+   DELETE FROM %TABLE WHERE %TABLE.id=$ID;
       `;
-   const sql = template.replace("$ID", id)
+   const sql = template.replace("$ID", id).replace("%TABLE",table).replace("%TABLE",table)
    
    return executeQuery(sql);
 };
+
+getBnBs().then((data)=>{
+   console.log(data);
+});

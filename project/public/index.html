@@ -10,6 +10,8 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
        <link href="https://cdn.jsdelivr.net/npm/remixicon@4.1.0/fonts/remixicon.css" rel="stylesheet"/>
+       <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.all.min.js"></script>
+       <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script> 
       </head>
     <body>
       <div id="main">
@@ -118,19 +120,13 @@
                     <input class='form-control' id="city" placeholder="Città" style="margin-left: 5%;" required/>
                   </div>
                   <textarea id='description' placeholder="Descrizione" class='form-control' required></textarea>
-                  <button id='confirm_add' class="btn btn-light btn-sm" type="button">
-                    <span>Conferma</span>
-                    
-                  </button>
+                  <button id='confirm_add' class="btn btn-light btn-sm" type="button">Conferma</button>
+                  <iframe id="loading" src="https://lottie.host/embed/66e70a89-2afc-4021-9865-bd5da9882885/69ZUtWw7XT.json" style="display:none;width:40%; height:40%;margin-left:auto;margin-right:auto"></iframe>
                   <p id="wrongi" style="display:none" class="text-danger">Inserisci tutti i campi correttamente</p>
                   <p id="ok" style="display:none" class="text-success">BnB inserito correttamente</p>
                 </div>
                 
               </form>
-              <div id='bnb_div' style="display: none">
-                <table id="bnb_table" class="table text-center">
-                </table>
-              </div>
           </div>
           <div  class="map" id="map" style="height:600px;
           width:90%;

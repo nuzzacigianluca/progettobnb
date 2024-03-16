@@ -18,14 +18,21 @@ document.getElementById("confirm_add").onclick=()=>{
     && document.getElementById("civic").value 
     && document.getElementById("city").value
     && document.getElementById("description").value){
-        const address = document.getElementById("type").value 
+        document.getElementById("wrongi").style.display="none";
+        document.getElementById("loading").style.display="block";
+        setTimeout(() => {
+            const address = document.getElementById("type").value 
         +" "+ document.getElementById("address").value
         +" "+ document.getElementById("civic").value
         +" "+ document.getElementById("city").value;
         getCoordinates(address)
+        }, 2000);
+        
+
     }else{
-        document.getElementById("wrongi").style.display = "block";
+        document.getElementById("loading").style.display="none";
         document.getElementById("ok").style.display = "none";
+        document.getElementById("wrongi").style.display = "block";
     };
 };
 const logOut = () => {
@@ -37,7 +44,6 @@ const logOut = () => {
     document.getElementById("map").style.display = "none";
     document.getElementById("loginform").style.display = "block";
     document.getElementById("add_form").style.display = "none";
-    document.getElementById("bnb_div").style.display = "none";  
     document.getElementById("log-out").style.display = "none";
     document.getElementById("add_bnb").style.display="none";
     document.getElementById("view_bnb").style.display="none"; 
@@ -49,14 +55,12 @@ const backToHome = () => {
     document.getElementById("map").style.display = "block";
     document.getElementById("loginform").style.display = "none";
     document.getElementById("add_form").style.display = "none";
-    document.getElementById("bnb_div").style.display = "none";
     document.getElementById("log-out").style.display = "none"; 
     document.getElementById("add_bnb").style.display="none";
     document.getElementById("view_bnb").style.display="none";
 }
 const showAddBnBForm = () => {
     document.getElementById("add_form").style.display = "block";
-    document.getElementById("bnb_div").style.display = "none";
     document.getElementById("bnbs").style.display = "none";
 };
 const showBnb = () => {
@@ -75,7 +79,6 @@ const loggedUser = () => {
     document.getElementById("add_form").style.display = "none";
     document.getElementById("admin").style.display = "none";
     document.getElementById("log-out").style.display = "none"; 
-    document.getElementById("bnb_div").style.display = "none";  
     document.getElementById("add_bnb").style.display="none";
     document.getElementById("view_bnb").style.display="none";
 };
@@ -83,7 +86,6 @@ const notLoggedUser = () => {
     document.getElementById("map").style.display = "none";
     document.getElementById("loginform").style.display = "block";
     document.getElementById("add_form").style.display = "none";
-    document.getElementById("bnb_div").style.display = "none";  
 };
 document.getElementById("manage-button-a").onclick=()=>{
     document.getElementById("title-name-detail").innerText = 'Admin page - BnB';
@@ -116,7 +118,7 @@ const getCoordinates=(address) =>{
             "coordinates": coordinates
         };
         saveBnB(bnb);
-        
+        addMarker(bnb);
         };
       })
       .catch(error => {
@@ -137,11 +139,16 @@ const saveBnB = (bnb) => {
         })
         .then((response) => response.json())
         .then((json) => {
-            if(json.result){
+            if(json.Response){
                 document.getElementById("ok").style.display = "block";
                 document.getElementById("wrongi").style.display = "none";
-                document.getElementById("add_form").reset;
+                document.getElementById("loading").style.display="none";
+                setTimeout(() => {
+                    document.getElementById("ok").style.display = "none";
+                    document.getElementById("add_form").reset();
+                }, 6000);
             }else{
+                document.getElementById("loading").style.display="none";
                 document.getElementById("ok").style.display = "none";
                 document.getElementById("wrongi").style.display = "block";
             };
