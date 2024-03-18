@@ -121,7 +121,7 @@
     opacity: 0.8;
   }
   
-  
+ 
   .bg-image-vertical {
   position: relative;
   overflow: hidden;
@@ -149,10 +149,20 @@
                  border-radius: .2em .2em 0 0;
                  padding: .4em;
                  color: black;
-                 width: 100%;
+                 width: 90%;
                  }
-  
-  
+#eye_button{
+  appearance: none;
+                 border: none;
+                 outline: none;
+                 border-bottom: .2em solid lightblue;
+                 background: rgba(lightblue, .2);
+                 border-radius: .2em .2em 0 0;
+                 padding: .4em;
+                 color: black;
+                 width: 10%;
+}
+
   #username-input{
     appearance: none;
      border: none;
@@ -169,6 +179,17 @@
     width: 100%
   }
 
+#username-input :focus{
+  visibility: hidden,m ;
+  }
+body{
+    background-color:#292931;
+    background:url(https://i.postimg.cc/x8MFCyPB/download.jpg)  no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+  }
 
   @keyframes fallingAnimation {
     0% {
@@ -182,5 +203,67 @@
   }
   
 .falling-animation {
-  animation: fallingAnimation 0.5s ease forwards;
+  animation: fallingAnimation 1s ease forwards;
+}
+
+
+@keyframes risingAnimation {
+  0% {
+    transform: translateY(0px); 
+    opacity: 1; 
+  }
+  100% {
+    transform: translateY(-400px); 
+    opacity: 0;
+  }
+}
+
+.rising-animation {
+animation: risingAnimation 1s ease forwards;
+}
+
+
+#login-form{
+    margin-top: 10%;
+    margin-left: auto;
+    margin-right: auto;
+    height: 60%;
+    width: 30%;
+    background-color: rgba(255, 255, 255, 0.54);
+    border-radius: 10px;
+    backdrop-filter: blur(2px);
+    box-shadow: 0 0 40px rgba(8,7,16,0.6);
+    padding: 50px 35px;
+}
+
+#login-form h3{
+  text-align: center;
+}
+
+
+#add_form{
+  margin-top: 10%;
+  margin-left: auto;
+  margin-right: auto;
+  height: 60%;
+  width: 60%;
+  background-color: rgb(255, 255, 255);
+  border-radius: 10px;
+  box-shadow: 0 0 40px rgba(8,7,16,0.6);
+  padding-left: 5%;
+  padding-right: 5%;
+  padding-top: 5%;
+  padding-bottom: 5%;
+  backdrop-filter: blur(2px);
+
+}
+
+#loading{
+  display:none;
+  width:40%; 
+  height:40%;
+  margin-left:auto;
+  margin-right:auto;
+  background-color: rgb(255, 255, 255);
+  backdrop-filter: blur(2px);
 }

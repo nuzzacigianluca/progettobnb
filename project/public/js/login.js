@@ -4,7 +4,6 @@ document.getElementById("login-button").onclick=()=>{
     const user = document.getElementById("username-input").value;
     const password = document.getElementById("password-input").value;
     return checkLogin(user, password);
-    
 };
 
 
@@ -25,7 +24,13 @@ const checkLogin = (user, password) => {
         .then((response) => response.json())
         .then((json) => {
             if(json.result){
-              logIn()
+              document.getElementById("wrong").style.display="none";
+              document.getElementById("login-form").classList.add("rising-animation");
+              setTimeout(() => {
+                document.getElementById("login-form").classList.remove("rising-animation"); 
+                logIn()
+            }, 1000);
+              
             }else{
                 document.getElementById("wrong").style.display = "block";
             };
@@ -49,12 +54,25 @@ document.getElementById("username-input").addEventListener("keypress", function(
     };
   });
 
+document.getElementById("eye_button").onclick=()=>{
+  const val = document.getElementById("eye_button").value
+  if(val==="false"){
+      document.getElementById("eye_button").innerHTML=`<i class="fi fi-br-eye-crossed"></i>`;
+      document.getElementById("eye_button").value = true;
+      document.getElementById("password-input").type="text";
+  }else{
+      document.getElementById("eye_button").innerHTML=`<i class="fi fi-br-eye"></i>`;
+      document.getElementById("eye_button").value = false;
+      document.getElementById("password-input").type="password";
+  }
+}
 
 const logIn = () => {
   getBnbs();
   Cookies.set('username',document.getElementById("username-input").value);
   Cookies.set('password',document.getElementById("password-input").value);
-  document.getElementById("loginform").style.display = "none";
+  document.getElementById("login-form").style.display = "none";
+  document.getElementById("bnbs").classList.add("falling-animation");
   document.getElementById("admin").style.display = "block";
   document.getElementById("log-out").style.display = "block";
   document.getElementById("username-input").value="";

@@ -42,27 +42,30 @@ const logOut = () => {
     document.getElementById("username-input").style = "border-bottom: .2em solid lightblue";
     document.getElementById("password-input").style = "border-bottom: .2em solid lightblue";
     document.getElementById("map").style.display = "none";
-    document.getElementById("loginform").style.display = "block";
+    document.getElementById("login-form").style.display = "block";
     document.getElementById("add_form").style.display = "none";
     document.getElementById("log-out").style.display = "none";
     document.getElementById("add_bnb").style.display="none";
     document.getElementById("view_bnb").style.display="none"; 
+    document.getElementById("bnbs").style.display="none"; 
+
 };
 const backToHome = () => {
     document.getElementById("manage-button-a").style.display = "block";
     document.getElementById("title-name-detail").innerText = 'Home page - BnB';
     document.getElementById("admin").style.display = "none";
     document.getElementById("map").style.display = "block";
-    document.getElementById("loginform").style.display = "none";
+    document.getElementById("login-form").style.display = "none";
     document.getElementById("add_form").style.display = "none";
     document.getElementById("log-out").style.display = "none"; 
     document.getElementById("add_bnb").style.display="none";
     document.getElementById("view_bnb").style.display="none";
 }
 const showAddBnBForm = () => {
-    document.getElementById("add_form").classList.add("falling-animation");
     document.getElementById("add_form").style.display = "block";
+    document.getElementById("add_form").classList.add("falling-animation");
     document.getElementById("bnbs").style.display = "none";
+
 };
 const showBnb = () => {
     getBnbs();
@@ -77,7 +80,7 @@ const loggedUser = () => {
     document.getElementById("username-input").style = "background-color:lightgreen;";
     document.getElementById("password-input").style = "background-color:lightgreen;";
     document.getElementById("map").style.display = "none";
-    document.getElementById("loginform").style.display = "block";
+    document.getElementById("login-form").style.display = "block";
     document.getElementById("add_form").style.display = "none";
     document.getElementById("admin").style.display = "none";
     document.getElementById("log-out").style.display = "none"; 
@@ -86,7 +89,7 @@ const loggedUser = () => {
 };
 const notLoggedUser = () => {
     document.getElementById("map").style.display = "none";
-    document.getElementById("loginform").style.display = "block";
+    document.getElementById("login-form").style.display = "block";
     document.getElementById("add_form").style.display = "none";
 };
 document.getElementById("manage-button-a").onclick=()=>{
@@ -159,12 +162,4 @@ const saveBnB = (bnb) => {
      });
 };
 
-
-
-$('#view_bnb').click(function() {
-    $('#add_form').removeClass('falling-animation'); // Rimuovi l'animazione di sparizione
-    $('#add_form').addClass('rising-animation'); // Aggiungi l'animazione di caduta
-  
-  });
-  
   

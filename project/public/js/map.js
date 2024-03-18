@@ -107,7 +107,7 @@ function initOverlay(map, points) {
 
 // create map
 map = new ol.Map({ target: document.querySelector('.map') });
-map.height = screen.height / 1.6;
+map.height = screen.height / 1.5;
 map.getViewport().style.height = map.height + 'px';  
 setLayers(map);
 setCenter(map, [9.2415, 45.4965]);
