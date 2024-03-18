@@ -26,7 +26,7 @@ document.getElementById("confirm_add").onclick=()=>{
         +" "+ document.getElementById("civic").value
         +" "+ document.getElementById("city").value;
         getCoordinates(address)
-        }, 2000);
+        }, 1000);
         
 
     }else{
@@ -46,8 +46,7 @@ const logOut = () => {
     document.getElementById("add_form").style.display = "none";
     document.getElementById("log-out").style.display = "none";
     document.getElementById("add_bnb").style.display="none";
-    document.getElementById("view_bnb").style.display="none"; 
-    document.getElementById("bnbs").style.display="none"; 
+    document.getElementById("view_bnb").style.display="none";     
 
 };
 const backToHome = () => {
@@ -62,16 +61,27 @@ const backToHome = () => {
     document.getElementById("view_bnb").style.display="none";
 }
 const showAddBnBForm = () => {
-    document.getElementById("add_form").style.display = "block";
-    document.getElementById("add_form").classList.add("falling-animation");
-    document.getElementById("bnbs").style.display = "none";
+    document.getElementById("add_form").classList.remove("rising-animation");
+    document.getElementById("bnbs").classList.add("rising-animation");
+    setTimeout(() => {
+        document.getElementById("bnbs").classList.remove("rising-animation");
+        document.getElementById("add_form").style.display = "block";
+        document.getElementById("add_form").classList.add("falling-animation");
+        document.getElementById("bnbs").style.display = "none";
+    }, 1000);
+    
 
 };
 const showBnb = () => {
     getBnbs();
-    document.getElementById("bnbs").classList.add("falling-animation");
-    document.getElementById("add_form").style.display = "none";
-    document.getElementById("bnbs").style.display = "block";
+    document.getElementById("add_form").classList.add("rising-animation");
+    setTimeout(() => {
+        document.getElementById("add_form").classList.remove("rising-animation");
+        document.getElementById("bnbs").classList.add("falling-animation");
+        document.getElementById("add_form").style.display = "none";
+        document.getElementById("bnbs").style.display = "block";
+    }, 500);
+    
 };
 const loggedUser = () => {
     document.querySelectorAll(".logged").forEach((element)=>{element.style.display = "block"});
@@ -120,7 +130,9 @@ const getCoordinates=(address) =>{
             "name": document.getElementById("input_name").value,
             "address": address,
             "description": document.getElementById("description").value,
-            "coordinates": coordinates
+            "coordinates": coordinates,
+            "longitude": coordinates.long,
+            "latitude": coordinates.lat,
         };
         saveBnB(bnb);
         addMarker(bnb);
@@ -144,6 +156,7 @@ const saveBnB = (bnb) => {
         })
         .then((response) => response.json())
         .then((json) => {
+            console.log(json.Response);
             if(json.Response){
                 document.getElementById("ok").style.display = "block";
                 document.getElementById("wrongi").style.display = "none";
@@ -151,7 +164,7 @@ const saveBnB = (bnb) => {
                 setTimeout(() => {
                     document.getElementById("ok").style.display = "none";
                     document.getElementById("add_form").reset();
-                }, 3000);
+                }, 2000);
             }else{
                 document.getElementById("loading").style.display="none";
                 document.getElementById("ok").style.display = "none";

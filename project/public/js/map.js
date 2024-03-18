@@ -26,20 +26,20 @@ function updateMapExtent() {
   });
 
   map.getView().fit(extent, {
-    padding: [45, 45, 45, 45],
+    padding: [55, 55, 55, 55],
   });
 }
 
 // funzione per aggiungere un marcatore
 const addMarker = (bnb) => {
+  console.log(bnb);
   const feature = new ol.Feature({
-    geometry: new ol.geom.Point(ol.proj.fromLonLat([bnb.coordinates.long,bnb.coordinates.lat])),
+    geometry: new ol.geom.Point(ol.proj.fromLonLat([bnb.longitude,bnb.latitude])),
   });
   feature.name=bnb.name;
   feature.address=bnb.address;
   feature.description=bnb.description;
   feature.id=bnb.id;
-
   const layer = new ol.layer.Vector({
     source: new ol.source.Vector({
       features: [feature],
@@ -90,7 +90,7 @@ function initOverlay(map, points) {
       map.forEachFeatureAtPixel(event.pixel, (feature, layer) => {
         const coordinate = event.coordinate;
         Swal.fire({
-          title: 'NOME:\n' + feature.name + '\nDESCRIZIONE:\n' + feature.description+ '\nINDIRIZZO\n' +feature.address,
+          title: 'NOME: ' + feature.name + '\nINDIRIZZO: ' +feature.address + '\nDESCRIZIONE\n ' + feature.description,
           position: 'top',
           background: 'white',
           showConfirmButton: true,
@@ -117,13 +117,9 @@ initOverlay(map);
 // remove_marker(0);
 
 
-const renderMarkers=(coordinates,bnbs)=>{
+const renderMarkers=(bnbs)=>{
   for(let i=0; i<bnbs.length; i++){
-    const coordsId = coordinates[i].id
-    const bnb = bnbs.find((element)=>element.coordinates===coordsId);
-    console.log(bnb,"bnb");
-    bnb.coordinates = {lat: coordinates[i].latitude, long: coordinates[i].longitude}
-    addMarker(bnb);
+    addMarker(bnbs[i]);
   }
 }
 
@@ -133,30 +129,15 @@ const getBnBs = (coordinates) => {
       fetch("/bnbs")
       .then((response) => response.json())
       .then((json) => {
-        renderMarkers(coordinates.coords,json.bnbs);
+        console.log(json,"bnb");
+        renderMarkers(json.bnbs);
         resolve(json);
       });
    });
 };
 
-// gets coordinates
-const getCoords = () => {
-  return new Promise((resolve, reject) => {
-      fetch("/coords")
-      .then((response) => response.json())
-      .then((json) => {
-          // const data = json.coords
-          // data.forEach(element => {
-          //     console.log(element)
-          //     deleteCoordss(element.id);
-          //   });
-          getBnBs(json);
-          resolve(json);
-      });
-  });
-};
 
-getCoords()
+getBnBs();
 
 // const deleteCoordss = (id) => {
 //       return new Promise((resolve, reject) => {

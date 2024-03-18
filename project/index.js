@@ -58,7 +58,8 @@ app.post("/login", (req, res) => {
 const getBnBs= ()=>{
    const sql = `
    SELECT *
-   FROM BnB
+   FROM BnB, Coordinates
+   WHERE BnB.coordinates = Coordinates.id
       `;
    return executeQuery(sql, true); 
  };
@@ -83,11 +84,16 @@ app.get("/coords", (req, res) => {
    });
 });
 
-app.post("/savebnb", (req, res) => {
+app.post("/savebnb", async(req, res) => {
    const data = req.body;
-   saveCoord(data.coordinates.lat, data.coordinates.long)
-   saveBnB(data.name, data.address, data.description,data.coordinates.lat, data.coordinates.long);
-   res.json({Response: "OK"})
+   try{
+      await saveCoord(data.coordinates.lat, data.coordinates.long)
+      await saveBnB(data.name, data.address, data.description,data.coordinates.lat, data.coordinates.long);
+      res.json({Response: true})
+   }catch{
+      res.json({Response: false})
+   }
+   
 });
 
 
