@@ -44,9 +44,13 @@ const logOut = () => {
     document.getElementById("map").style.display = "none";
     document.getElementById("login-form").style.display = "block";
     document.getElementById("add_form").style.display = "none";
+    document.getElementById("bnbs").style.display = "none";
     document.getElementById("log-out").style.display = "none";
     document.getElementById("add_bnb").style.display="none";
-    document.getElementById("view_bnb").style.display="none";     
+    document.getElementById("view_bnb").style.display="none";  
+    document.getElementById("bnbs").classList.remove("rising-animation");
+    document.getElementById("bnbs").classList.remove("falling-animation");
+
 
 };
 const backToHome = () => {
@@ -62,9 +66,10 @@ const backToHome = () => {
 }
 const showAddBnBForm = () => {
     document.getElementById("add_form").classList.remove("rising-animation");
+    document.getElementById("add_form").classList.remove("falling-animation");
+    document.getElementById("bnbs").classList.remove("falling-animation");
     document.getElementById("bnbs").classList.add("rising-animation");
     setTimeout(() => {
-        document.getElementById("bnbs").classList.remove("rising-animation");
         document.getElementById("add_form").style.display = "block";
         document.getElementById("add_form").classList.add("falling-animation");
         document.getElementById("bnbs").style.display = "none";
@@ -74,6 +79,9 @@ const showAddBnBForm = () => {
 };
 const showBnb = () => {
     getBnbs();
+    document.getElementById("bnbs").classList.remove("rising-animation");
+    document.getElementById("bnbs").classList.remove("falling-animation");
+    document.getElementById("add_form").classList.remove("falling-animation");
     document.getElementById("add_form").classList.add("rising-animation");
     setTimeout(() => {
         document.getElementById("add_form").classList.remove("rising-animation");
@@ -156,7 +164,6 @@ const saveBnB = (bnb) => {
         })
         .then((response) => response.json())
         .then((json) => {
-            console.log(json.Response);
             if(json.Response){
                 document.getElementById("ok").style.display = "block";
                 document.getElementById("wrongi").style.display = "none";

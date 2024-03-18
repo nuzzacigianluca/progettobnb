@@ -72,6 +72,9 @@ const logIn = () => {
   Cookies.set('username',document.getElementById("username-input").value);
   Cookies.set('password',document.getElementById("password-input").value);
   document.getElementById("login-form").style.display = "none";
+  document.getElementById("bnbs").style.display = "block";
+  document.getElementById("bnbs").classList.remove("rising-animation");
+  document.getElementById("bnbs").classList.remove("falling-animation");
   document.getElementById("bnbs").classList.add("falling-animation");
   document.getElementById("admin").style.display = "block";
   document.getElementById("log-out").style.display = "block";
@@ -92,7 +95,6 @@ const templateTable = `
 `;
 
 const renderTable = (json) => {
-  console.log("rendering");
   let html = "";
   let row="";
   document.getElementById("tbody").innerHTML ="";
@@ -118,7 +120,8 @@ const renderTable = (json) => {
       document.getElementById("conf").onclick=()=>{
         $('#exampleModal').modal('toggle');
         deleteElement(parseInt(id.split(",")[0])).then(()=>{
-          deleteCoords(parseInt(id.split(",")[1]))
+          deleteCoords(parseInt(id.split(",")[1]));
+          remove_markers();
           getBnbs();
         });
       };

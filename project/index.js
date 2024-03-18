@@ -56,9 +56,8 @@ app.post("/login", (req, res) => {
    });
 });
 const getBnBs= ()=>{
-   const sql = `
-   SELECT *
-   FROM BnB, Coordinates
+   const sql = `SELECT BnB.id, BnB.name, BnB.address, BnB.description, BnB.coordinates, Coordinates.latitude, Coordinates.longitude
+   FROM BnB,Coordinates
    WHERE BnB.coordinates = Coordinates.id
       `;
    return executeQuery(sql, true); 
@@ -70,19 +69,6 @@ app.get("/bnbs", (req, res) => {
    
 });
 
-const getCoords=()=>{
-   const sql = `
-   SELECT *
-   FROM Coordinates
-      `;
-   return executeQuery(sql,true); 
-}
-
-app.get("/coords", (req, res) => {
-   getCoords().then((data)=>{
-      res.json({coords:data});
-   });
-});
 
 app.post("/savebnb", async(req, res) => {
    const data = req.body;
@@ -147,4 +133,17 @@ const deleteElement=(id,table)=>{
    
    return executeQuery(sql);
 };
+
+
+const k = `SELECT BnB.id, BnB.name, BnB.address, BnB.description, BnB.coordinates, Coordinates.latitude, Coordinates.longitude
+FROM BnB,Coordinates
+WHERE BnB.coordinates = Coordinates.id
+   `;
+// executeQuery(k).then((data)=>{console.log(data,"bnb")});
+
+
+// const j = `SELECT *
+// FROM  Coordinates
+//    `;
+// executeQuery(j).then((data)=>{console.log(data,"server")});
 

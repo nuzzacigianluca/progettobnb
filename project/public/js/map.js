@@ -26,13 +26,12 @@ function updateMapExtent() {
   });
 
   map.getView().fit(extent, {
-    padding: [55, 55, 55, 55],
+    padding: [255, 255, 255, 255],
   });
 }
 
 // funzione per aggiungere un marcatore
 const addMarker = (bnb) => {
-  console.log(bnb);
   const feature = new ol.Feature({
     geometry: new ol.geom.Point(ol.proj.fromLonLat([bnb.longitude,bnb.latitude])),
   });
@@ -61,13 +60,12 @@ const addMarker = (bnb) => {
 };
 
 // funzione per rimuovere un marcatore
-const remove_marker = (i) => {
-  map.removeLayer(markers[i]);
-  markers.splice(i, 1);
-
-  if(markers.length>1){
-    updateMapExtent(); // Aggiorna l'estensione della mappa per includere il nuovo marcatore
-  }
+const remove_markers = () => {
+  markers.forEach((marker)=>{
+    map.removeLayer(marker.layer);
+  });
+  getBnBs();
+  
 };
 
 function initOverlay(map, points) {
@@ -85,8 +83,11 @@ function initOverlay(map, points) {
     return false;
   };
 
+  
+
   map.on('singleclick', function (event) {
-    if (map.hasFeatureAtPixel(event.pixel) === true) {
+    console.log("click");
+    if (map.hasFeatureAtPixel(event.pixel)) {
       map.forEachFeatureAtPixel(event.pixel, (feature, layer) => {
         const coordinate = event.coordinate;
         Swal.fire({
@@ -113,9 +114,6 @@ setLayers(map);
 setCenter(map, [9.2415, 45.4965]);
 setZoom(map, 10);
 initOverlay(map);
-// addMarker([9.2415, 45.4965])
-// remove_marker(0);
-
 
 const renderMarkers=(bnbs)=>{
   for(let i=0; i<bnbs.length; i++){
@@ -124,12 +122,11 @@ const renderMarkers=(bnbs)=>{
 }
 
 
-const getBnBs = (coordinates) => {
+const getBnBs = () => {
   return new Promise((resolve, reject) => {
       fetch("/bnbs")
       .then((response) => response.json())
       .then((json) => {
-        console.log(json,"bnb");
         renderMarkers(json.bnbs);
         resolve(json);
       });
@@ -138,19 +135,3 @@ const getBnBs = (coordinates) => {
 
 
 getBnBs();
-
-// const deleteCoordss = (id) => {
-//       return new Promise((resolve, reject) => {
-//          fetch("/deleteCoords/"+id, {
-//             method: 'DELETE',
-//             headers: {
-//                "Content-Type": "application/json"
-//             },
-//          })
-//          .then((response) => response.json())
-//          .then((json) => {
-//             resolve(json);
-//          });
-//       });
-//   } ;
-  
