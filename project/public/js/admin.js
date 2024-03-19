@@ -19,7 +19,7 @@ document.getElementById("confirm_add").onclick=()=>{
     && document.getElementById("city").value
     && document.getElementById("description").value){
         document.getElementById("wrongi").style.display="none";
-        document.getElementById("loading").style.display="block";
+        document.getElementById("loading").style.opacity=1;
         setTimeout(() => {
             const address = document.getElementById("type").value 
         +" "+ document.getElementById("address").value
@@ -30,7 +30,7 @@ document.getElementById("confirm_add").onclick=()=>{
         
 
     }else{
-        document.getElementById("loading").style.display="none";
+        document.getElementById("loading").style.opacity=0;
         document.getElementById("ok").style.display = "none";
         document.getElementById("wrongi").style.display = "block";
     };
@@ -168,13 +168,13 @@ const saveBnB = (bnb) => {
                 getBnBs();
                 document.getElementById("ok").style.display = "block";
                 document.getElementById("wrongi").style.display = "none";
-                document.getElementById("loading").style.display="none";
+                document.getElementById("loading").style.opacity=0;
                 setTimeout(() => {
                     document.getElementById("ok").style.display = "none";
-                    // document.getElementById("add_form").reset();
+                    document.getElementById("add_form").reset();
                 }, 2000);
             }else{
-                document.getElementById("loading").style.display="none";
+                document.getElementById("loading").style.opacity=0;
                 document.getElementById("ok").style.display = "none";
                 document.getElementById("wrongi").style.display = "block";
             };
