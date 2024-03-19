@@ -11,7 +11,7 @@ function updateMapExtent() {
   map.getView().fit(extent, {
     padding: [255, 255, 255, 255],
   });
-}
+};
 
 function setLayers(map) {
   const layers = [new ol.layer.Tile({source: new ol.source.OSM()})]; // creazione del layer 
@@ -29,16 +29,16 @@ function setLayers(map) {
     })
   });
   map.addLayer(vectorLayer);
-}
+};
 
 function setCenter(map, lonlat) {
   const center = window.ol.proj.fromLonLat(lonlat);
   map.getView().setCenter(center); 
-}
+};
 
 function setZoom(map, zoom) {
   map.getView().setZoom(zoom); 
-}
+};
 
 function addMarker(bnb) {
   const feature = new ol.Feature({
@@ -53,7 +53,7 @@ function addMarker(bnb) {
     longitude: bnb.longitude,
   });
   vectorSource.addFeature(feature);
-}
+};
 
 // delete marker
 const remove_marker = (id) => {
@@ -61,8 +61,8 @@ const remove_marker = (id) => {
   features.forEach((feature)=> {
     if(feature.values_.id===id){
       vectorSource.removeFeature(feature);
-    }
-  })
+    };
+  });
 };
 // apertura popup 
 function initOverlay(map, points) {
@@ -96,10 +96,10 @@ function initOverlay(map, points) {
     } else {
       overlay.setPosition(undefined); 
       closer.blur();
-    }
+    };
   });
 
-}
+};
 
 // create map
 const init = () => {
@@ -109,14 +109,14 @@ const init = () => {
   setZoom(map, 12);
   initOverlay(map);
   getBnBs();
-}
+};
 
 const renderMarkers = (bnbs) => {
   vectorSource.clear();
   for (let i = 0; i < bnbs.length; i++) {
     addMarker(bnbs[i]);
-  }
-}
+  };
+};
 
 const getBnBs = () => {
   return new Promise((resolve, reject) => {

@@ -55,7 +55,7 @@ document.getElementById("username-input").addEventListener("keypress", function(
   });
 
 document.getElementById("eye_button").onclick=()=>{
-  const val = document.getElementById("eye_button").value
+  const val = document.getElementById("eye_button").value;
   if(val==="false"){
       document.getElementById("eye_button").innerHTML=`<i class="fi fi-br-eye-crossed"></i>`;
       document.getElementById("eye_button").value = true;
@@ -103,7 +103,7 @@ const renderTable = (json) => {
     .replace("%ADDRESS", element.address)
     .replace("%DESCRIPTION", element.description)
     .replace("%ID", element.id+","+element.coordinates);
-   html += row 
+   html += row ;
   })
   document.getElementById("tbody").innerHTML += html;
   

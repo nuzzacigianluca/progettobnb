@@ -29,7 +29,7 @@ const executeQuery = (sql, get) => {
              }    
              if (get){
                const data = JSON.stringify(result);
-             }               
+             };               
              resolve(result);         
        });
     });
@@ -72,14 +72,14 @@ app.get("/bnbs", (req, res) => {
 
 app.post("/savebnb", async(req, res) => {
    const data = req.body;
+   const address = data.address.toLowerCase();
    try{
-      await saveCoord(data.coordinates.lat, data.coordinates.long)
-      await saveBnB(data.name, data.address, data.description,data.coordinates.lat, data.coordinates.long);
-      res.json({Response: true})
+      await saveCoord(data.coordinates.lat, data.coordinates.long);
+      await saveBnB(data.name, address, data.description,data.coordinates.lat, data.coordinates.long);
+      res.json({Response: true});
    }catch{
-      res.json({Response: false})
-   }
-   
+      res.json({Response: false});
+   };
 });
 
 
@@ -93,25 +93,39 @@ const saveCoord = (lat, lon) => {
    return executeQuery(sql);
 };
 
-
-const saveBnB = (name, address, description, latitude, longitude) => {
+const checkIfDuplicate = (address) => {
    let template = `
-   INSERT INTO BnB (name, address, description, coordinates)
-   VALUES ('$NAME', '$ADDRESS', '$DESCRIPTION', (
-      SELECT Coordinates.id
-       FROM Coordinates  
-       WHERE Coordinates.latitude = '$LAT' 
-       AND Coordinates.longitude = '$LON' 
-       LIMIT 1
-       )
-       ) 
-      `;
-   const sql = template.replace("$NAME", name)
-   .replace("$ADDRESS", address)
-   .replace("$DESCRIPTION", description)
-   .replace("$LAT", latitude)
-   .replace("$LON", longitude);
-   return executeQuery(sql);
+   SELECT COUNT(*)  
+   FROM BnB
+   WHERE BnB.address='$ADDRESS'
+   `
+   const sql = template.replace("$ADDRESS", address);
+   return executeQuery(sql, true);
+};
+const saveBnB = (name, address, description, latitude, longitude) => {
+   checkIfDuplicate(address).then((result)=>{
+      if (result[0]['COUNT(*)']==0){
+         let template = `
+         INSERT INTO BnB (name, address, description, coordinates)
+         VALUES ('$NAME', '$ADDRESS', '$DESCRIPTION', (
+            SELECT Coordinates.id
+             FROM Coordinates  
+             WHERE Coordinates.latitude = '$LAT' 
+             AND Coordinates.longitude = '$LON' 
+             LIMIT 1
+             )
+             ) 
+            `;
+         const sql = template.replace("$NAME", name)
+         .replace("$ADDRESS", address)
+         .replace("$DESCRIPTION", description)
+         .replace("$LAT", latitude)
+         .replace("$LON", longitude);
+         return executeQuery(sql);
+      }else{
+         console.log(result[0]['COUNT(*)'])
+      };
+   });
 };
 
 
@@ -133,17 +147,3 @@ const deleteElement=(id,table)=>{
    
    return executeQuery(sql);
 };
-
-
-const k = `SELECT BnB.id, BnB.name, BnB.address, BnB.description, BnB.coordinates, Coordinates.latitude, Coordinates.longitude
-FROM BnB,Coordinates
-WHERE BnB.coordinates = Coordinates.id
-   `;
-// executeQuery(k).then((data)=>{console.log(data,"bnb")});
-
-
-// const j = `SELECT *
-// FROM  Coordinates
-//    `;
-// executeQuery(j).then((data)=>{console.log(data,"server")});
-
