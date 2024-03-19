@@ -143,7 +143,7 @@ const getCoordinates=(address) =>{
             "latitude": coordinates.lat,
         };
         saveBnB(bnb);
-        addMarker(bnb);
+        
         };
       })
       .catch(error => {
@@ -165,12 +165,13 @@ const saveBnB = (bnb) => {
         .then((response) => response.json())
         .then((json) => {
             if(json.Response){
+                getBnBs();
                 document.getElementById("ok").style.display = "block";
                 document.getElementById("wrongi").style.display = "none";
                 document.getElementById("loading").style.display="none";
                 setTimeout(() => {
                     document.getElementById("ok").style.display = "none";
-                    document.getElementById("add_form").reset();
+                    // document.getElementById("add_form").reset();
                 }, 2000);
             }else{
                 document.getElementById("loading").style.display="none";

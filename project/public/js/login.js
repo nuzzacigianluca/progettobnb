@@ -121,7 +121,7 @@ const renderTable = (json) => {
         $('#exampleModal').modal('toggle');
         deleteElement(parseInt(id.split(",")[0])).then(()=>{
           deleteCoords(parseInt(id.split(",")[1]));
-          remove_markers();
+          remove_marker(parseInt(id.split(",")[0]));
           getBnbs();
         });
       };
