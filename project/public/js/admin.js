@@ -143,7 +143,6 @@ const getCoordinates=(address) =>{
             "latitude": coordinates.lat,
         };
         saveBnB(bnb);
-        
         };
       })
       .catch(error => {
@@ -165,7 +164,7 @@ const saveBnB = (bnb) => {
         .then((response) => response.json())
         .then((json) => {
             if(json.Response){
-                getBnBs();
+                addMarker(bnb);
                 document.getElementById("ok").style.display = "block";
                 document.getElementById("wrongi").style.display = "none";
                 document.getElementById("loading").style.opacity=0;
