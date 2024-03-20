@@ -46,7 +46,7 @@ function addMarker(bnb) {
   });
   feature.setProperties({
     name: bnb.name,
-    address: bnb.address,
+    address: bnb.address.toLowerCase(),
     description: bnb.description,
     id: bnb.id,
     latitude: bnb.latitude,
